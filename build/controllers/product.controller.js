@@ -57,7 +57,7 @@ exports.addProduct = addProduct;
 const listProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const products = yield product_model_1.default.find({});
-        console.log(products);
+        console.table(products);
         res.status(200).json({ success: true });
     }
     catch (err) {

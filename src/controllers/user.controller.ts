@@ -69,12 +69,8 @@ export const adminLogin = async (req: Request, res: Response): Promise<any> => {
     // const isMatched = await bcrypt.compare(password, user.password);
     if (password === user.password) {
       const token = JWT.sign(
-        { email: user.email },
-        process.env.SECRET_KEY as string,
-        {
-          expiresIn: '1h',
-        }
-      );
+          user.email + user.password,
+        process.env.SECRET_KEY as string);
       res.cookie('adminCookie', token);
       res.status(200).json({ token, email });
     } else {

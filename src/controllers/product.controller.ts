@@ -3,10 +3,10 @@ import Product from '../models/product.model';
 import dotenv from 'dotenv';
 import { v2 as cloudinary } from 'cloudinary';
 import { IProductData } from '../Interfaces/db.interface';
-import User from '../models/user.model';
 dotenv.config();
 
 //for adding products
+
 export const addProduct = async (req: Request, res: Response) => {
   try {
     const {
@@ -64,7 +64,8 @@ export const addProduct = async (req: Request, res: Response) => {
 export const listProduct = async (req: Request, res: Response) => {
   try {
     const products = await Product.find({});
-    console.log(products);
+    console.table(products);
+
     res.status(200).json({ success: true });
   } catch (err) {
     res.status(500).json({ success: false });
@@ -80,8 +81,6 @@ export const removeProduct = async (req: Request, res: Response) => {
     res.status(500).json({success:false, msg: "error removing product"})
   }
 };
-
-
 export const singleProduct = async (req:Request, res:Response) => {
     try{
         await Product.findById(req.body.id);

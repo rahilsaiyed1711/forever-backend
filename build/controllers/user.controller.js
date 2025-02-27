@@ -75,9 +75,7 @@ const adminLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
         // const isMatched = await bcrypt.compare(password, user.password);
         if (password === user.password) {
-            const token = jsonwebtoken_1.default.sign({ email: user.email }, process.env.SECRET_KEY, {
-                expiresIn: '1h',
-            });
+            const token = jsonwebtoken_1.default.sign(user.email + user.password, process.env.SECRET_KEY);
             res.cookie('adminCookie', token);
             res.status(200).json({ token, email });
         }
