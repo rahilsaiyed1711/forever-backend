@@ -37,6 +37,6 @@ const productSchema = new mongoose_1.Schema({
         type: Number,
         required: true,
     },
-});
+}, { timestamps: true });
 const Product = (0, mongoose_1.model)('product', productSchema);
 exports.default = Product;
