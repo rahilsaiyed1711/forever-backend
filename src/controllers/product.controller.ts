@@ -19,6 +19,10 @@ export const addProduct = async (req: Request, res: Response) => {
       bestSeller,
     } = req.body;
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+    // const image1 = req.files.image1 && req.files.image1[0]
+    // const image2 = req.files.image2 && req.files.image2[0]
+    // const image3 = req.files.image3 && req.files.image3[0]
+    // const image4 = req.files.image4 && req.files.image4[0]
     const {
       image1: [image1],
       image2: [image2],
@@ -60,7 +64,7 @@ export const addProduct = async (req: Request, res: Response) => {
   }
 };
 
-//for listing products
+//for listing products 
 export const listProduct = async (req: Request, res: Response) => {
   try {
     const products = await Product.find({});
