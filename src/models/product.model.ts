@@ -15,7 +15,7 @@ const productSchema = new Schema<IProduct>(
       required: true,
     },
     image: {
-      type: [Array],
+      type: [],
       required: true,
     },
     category: {

@@ -22,6 +22,10 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const { name, description, price, category, subCategory, sizes, bestSeller, } = req.body;
         const files = req.files;
+        // const image1 = req.files.image1 && req.files.image1[0]
+        // const image2 = req.files.image2 && req.files.image2[0]
+        // const image3 = req.files.image3 && req.files.image3[0]
+        // const image4 = req.files.image4 && req.files.image4[0]
         const { image1: [image1], image2: [image2], image3: [image3], image4: [image4], } = files;
         const images = [image1, image2, image3, image4].filter((item) => item != undefined);
         let imagesURL = yield Promise.all(images.map((item) => __awaiter(void 0, void 0, void 0, function* () {
@@ -53,12 +57,12 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.addProduct = addProduct;
-//for listing products
+//for listing products 
 const listProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const products = yield product_model_1.default.find({});
         console.table(products);
-        res.status(200).json({ success: true });
+        res.status(200).json({ success: true, data: products });
     }
     catch (err) {
         res.status(500).json({ success: false });

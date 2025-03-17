@@ -14,7 +14,7 @@ productRouter.post('/add', adminAuth_1.default, multer_1.default.fields([
     { name: 'image3', maxCount: 1 },
     { name: 'image4', maxCount: 1 },
 ]), product_controller_1.addProduct);
-productRouter.post('/list', product_controller_1.listProduct);
+productRouter.get('/list', product_controller_1.listProduct);
 productRouter.post('/remove', adminAuth_1.default, product_controller_1.removeProduct);
-productRouter.post('/single', product_controller_1.singleProduct);
+productRouter.get('/single', product_controller_1.singleProduct);
 exports.default = productRouter;

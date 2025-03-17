@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminLogin = exports.loginUser = exports.registerUser = void 0;
 const user_model_1 = __importDefault(require("../models/user.model"));
-const admin_model_1 = __importDefault(require("../models/admin.model"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -24,7 +23,8 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const { name, email, password } = req.body;
         const isExist = yield user_model_1.default.findOne({ email });
         if (isExist) {
-            res.status(409).json({ msg: 'user already existes' });
+            res.status(409).json({ msg: 'user already exists' });
+            return; // Add this line to prevent further execution
         }
         const salt = yield bcrypt_1.default.genSalt(10);
         const hashedPassword = yield bcrypt_1.default.hash(password, salt);
@@ -33,7 +33,8 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             email,
             password: hashedPassword,
         });
-        const user = newUser.save();
+        const user = yield newUser.save();
+        console.log(user);
         res.status(200).json({ msg: 'created' });
         return res.redirect('/api/users/login');
     }
@@ -67,24 +68,19 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.loginUser = loginUser;
 //admin login route
 const adminLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password } = req.body;
     try {
-        const user = yield admin_model_1.default.findOne({ email });
-        if (!user) {
-            return res.status(409).json({ msg: 'User Does not exists' });
-        }
-        // const isMatched = await bcrypt.compare(password, user.password);
-        if (password === user.password) {
-            const token = jsonwebtoken_1.default.sign(user.email + user.password, process.env.SECRET_KEY);
-            res.cookie('adminCookie', token);
-            res.status(200).json({ token, email });
+        const { email, password } = req.body;
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const token = jsonwebtoken_1.default.sign(email + password, process.env.SECRET_KEY);
+            res.json({ success: true, token });
         }
         else {
-            res.status(409).json({ msg: 'Password Incorrect' });
+            res.json({ success: false, massage: "Invalid credentials" });
         }
     }
-    catch (err) {
-        res.status(500).json({ msg: 'error occurred' });
+    catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "error" });
     }
 });
 exports.adminLogin = adminLogin;

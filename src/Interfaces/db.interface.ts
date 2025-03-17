@@ -32,6 +32,6 @@ export interface IProductData {
   subCategory: string;
   bestSeller: boolean;
   sizes: any; // Assuming sizes is an array of strings
-image: string[]; // Assuming imagesURL is an array of strings
+  image: any; // Assuming imagesURL is an array of strings
   date: number; // Timestamp
 }
