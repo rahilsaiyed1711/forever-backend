@@ -13,7 +13,7 @@ export const registerUser = async (
     const isExist = await User.findOne({ email });
     if (isExist) {
       res.status(409).json({ msg: 'user already exists' });
-      return; // Add this line to prevent further execution
+      return; // Prevent further execution
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -25,7 +25,6 @@ export const registerUser = async (
     const user = await newUser.save(); 
     console.log(user);
     res.status(200).json({ msg: 'created' });
-    return res.redirect('/api/users/login');
   } catch (error) {
     res.status(500).json({ error: 'error creating user' });
   }
