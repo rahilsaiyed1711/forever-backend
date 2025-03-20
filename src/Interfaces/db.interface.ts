@@ -35,3 +35,15 @@ export interface IProductData {
   image: any; // Assuming imagesURL is an array of strings
   date: number; // Timestamp
 }
+
+
+export interface IOrderData{
+    orderId: string,
+    items: [],
+    amount: number,
+    address:object,
+    status: string,
+    paymentMode: string,
+    payment:boolean,
+    date: number,
+}

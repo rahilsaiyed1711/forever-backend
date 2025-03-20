@@ -6,7 +6,6 @@ import { IProductData } from '../Interfaces/db.interface';
 dotenv.config();
 
 //for adding products
-
 export const addProduct = async (req: Request, res: Response) => {
   try {
     const {
@@ -31,17 +30,14 @@ export const addProduct = async (req: Request, res: Response) => {
 
     let imagesURL = await Promise.all(
       images.map(async (item) => {
-        // Since item is an array of files (image1, image2, etc.), we access the first file
         let result = await cloudinary.uploader.upload(item[0].path, {
           resource_type: 'image',
         });
-        return result.secure_url;  // Directly return the secure URL, not wrapped in an array
+        return result.secure_url;  
       })
     );
     
-    console.log('imagesURL:', imagesURL); // Should now be a flat array of URLs
-    
-    console.log("imagesURL",imagesURL);
+
     
     const productData: IProductData = {
       name,
@@ -54,11 +50,8 @@ export const addProduct = async (req: Request, res: Response) => {
       bestSeller: bestSeller === 'true' ? true : false,
       date: Date.now(),
     };
-    console.log(productData);
     const product = new Product(productData);
     product.save();
-    console.log(image1, image2, image3, image4);
-    console.log(imagesURL);
     res.status(201).json({ msg: 'Product Added' });
   } catch (err) {
     console.log(err);
@@ -87,8 +80,8 @@ export const removeProduct = async (req: Request, res: Response) => {
 };
 export const singleProduct = async (req:Request, res:Response) => {
     try{
-        await Product.findById(req.body.id);
-        res.status(200).json({success:true})
+        const product = await Product.findById(req.body.id);
+        res.status(200).json({success:true, data : product})
     }catch(err){
         
     }
