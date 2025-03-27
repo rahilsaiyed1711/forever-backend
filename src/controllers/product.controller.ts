@@ -33,12 +33,10 @@ export const addProduct = async (req: Request, res: Response) => {
         let result = await cloudinary.uploader.upload(item[0].path, {
           resource_type: 'image',
         });
-        return result.secure_url;  
+        return result.secure_url;
       })
     );
-    
 
-    
     const productData: IProductData = {
       name,
       description,
@@ -61,11 +59,11 @@ export const addProduct = async (req: Request, res: Response) => {
 export const listProduct = async (req: Request, res: Response) => {
   try {
     const products = await Product.find({});
-    console.table(products);
+    console.log(products);
 
-    res.status(200).json({ success: true, data:products });
+    res.status(200).json({ success: true, data: products });
   } catch (err) {
-    res.status(500).json({ success: false });
+    res.status(500).json({ success: false, data: null });
   }
 };
 
@@ -73,16 +71,14 @@ export const listProduct = async (req: Request, res: Response) => {
 export const removeProduct = async (req: Request, res: Response) => {
   try {
     await Product.findByIdAndDelete(req.body.id);
-    res.status(200).json({success:true, msg: "Product Removed"})
+    res.status(200).json({ success: true, msg: 'Product Removed' });
   } catch (error) {
-    res.status(500).json({success:false, msg: "error removing product"})
+    res.status(500).json({ success: false, msg: 'error removing product' });
   }
 };
-export const singleProduct = async (req:Request, res:Response) => {
-    try{
-        const product = await Product.findById(req.body.id);
-        res.status(200).json({success:true, data : product})
-    }catch(err){
-        
-    }
+export const singleProduct = async (req: Request, res: Response) => {
+  try {
+    const product = await Product.findById(req.body.id);
+    res.status(200).json({ success: true, data: product });
+  } catch (err) {}
 };

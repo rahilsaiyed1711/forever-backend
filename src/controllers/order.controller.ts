@@ -18,14 +18,14 @@ const placeOrder = async (req: Request, res: Response) => {
       payment: false,
       date: Date.now(),
     });
-    const newOrder = new Order(orderData);
+      const newOrder = new Order(orderData);
     newOrder.save();
     await User.findByIdAndUpdate(userId, { cartData: {} });
     res
       .status(200)
       .json({ success: true, messege: 'order placed successfully' });
   } catch (error) {
-    res.status(401).json({ success: false, messege: 'error placing error' });
+    res.status(404).json({ success: false, messege: 'error placing error' });
   }
 };
 

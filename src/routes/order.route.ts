@@ -17,14 +17,11 @@ orderRouter.post('/status', adminAuth, updateStatus);
 
 //payment method
 
-orderRouter.post('/place', placeOrder );
-orderRouter.post('/stripe',authUser, placeOrderStripe );
-orderRouter.post('/razorpay',authUser, placeOrderRazorpay );
-
+orderRouter.post('/place', placeOrder);
+orderRouter.post('/stripe', authUser, placeOrderStripe);
+orderRouter.post('/razorpay', authUser, placeOrderRazorpay);
 
 //user order
-orderRouter.post('/userorders', adminAuth, userOrders);
-
-
+orderRouter.get('/userorders', adminAuth, userOrders);
 
 export default orderRouter;

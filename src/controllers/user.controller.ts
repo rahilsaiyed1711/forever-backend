@@ -23,7 +23,7 @@ export const registerUser = async (
       password: hashedPassword,
     });
     const user = await newUser.save(); 
-    console.log(user);
+     console.log(user);
     res.status(200).json({ msg: 'created' });
   } catch (error) {
     res.status(500).json({ error: 'error creating user' });
@@ -52,7 +52,7 @@ export const loginUser = async (req: Request, res: Response): Promise<any> => {
     console.log(token);
     res.json({ token, email });
   } catch (err) {
-    res.status(500).json({ msg: 'eroor ' });
+    res.status(500).json({ msg: 'error' });
   }
 };
 
